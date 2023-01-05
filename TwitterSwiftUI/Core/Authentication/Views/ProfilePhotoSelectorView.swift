@@ -20,19 +20,40 @@ struct ProfilePhotoSelectorView: View {
             Button {
                 showImagePicker.toggle()
             } label: {
-                Image("plus_photo")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 180, height: 180)
-                    .padding(.top, 44)
+                if let profileImage = profileImage {
+                    profileImage
+                        .resizable()
+                        .modifier(ProfileImageModifier())
+                } else {
+                    Image("plus_photo")
+                        .resizable()
+                        .modifier(ProfileImageModifier())
+                }
             }
-            .sheet(isPresented: $showImagePicker) {
+            .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
                 ImagePicker(selectedImage: $selectedImage)
             }
             
             Spacer()
         }
         .ignoresSafeArea()
+    }
+    
+    func loadImage() {
+        guard let selectedImage = selectedImage else {return}
+        profileImage = Image(uiImage: selectedImage)
+    }
+    
+    
+}
+
+private struct ProfileImageModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(width: 180, height: 180)
+            .scaledToFit()
+            .clipShape(Circle())
+            .padding(.top, 44)
     }
 }
 
