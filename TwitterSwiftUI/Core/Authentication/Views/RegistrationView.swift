@@ -12,16 +12,23 @@ struct RegistrationView: View {
        @State private var username = ""
        @State private var fullname = ""
        @State private var password = ""
-       @EnvironmentObject var viewModel: AuthViewModel
-       
        @Environment(\.presentationMode) var presentationMode
+       @EnvironmentObject var viewModel: AuthViewModel
+ 
+       @State var t = true
+       
        
        var body: some View {
+//           var x = print("---Update body")
+//           var z = $viewModel.didAuthenticateUser
+//           var z1 = print(z)
+//           var y = print($viewModel.didAuthenticateUser)
+           
            VStack {
                
-               NavigationLink(destination: ProfilePhotoSelectorView(),
-                              isActive: $viewModel.didAuthenticateUser,
-                              label: {} )
+//               NavigationLink(destination: ProfilePhotoSelectorView(),
+//                              isActive: $viewModel.didAuthenticateUser,
+//                              label: {} )
                
                
                // header view
@@ -90,6 +97,10 @@ struct RegistrationView: View {
                
            }
            .ignoresSafeArea()
+           .sheet(isPresented: $viewModel.didAuthenticateUser){
+               ProfilePhotoSelectorView()
+              
+           }
        }
     
 }

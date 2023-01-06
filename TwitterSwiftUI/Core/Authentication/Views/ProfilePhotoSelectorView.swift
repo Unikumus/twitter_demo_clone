@@ -11,6 +11,7 @@ struct ProfilePhotoSelectorView: View {
     @State private var showImagePicker = false
     @State private var selectedImage: UIImage?
     @State private var profileImage: Image?
+    @EnvironmentObject var viewModel: AuthViewModel
     
     var body: some View {
         VStack {
@@ -33,6 +34,23 @@ struct ProfilePhotoSelectorView: View {
             .sheet(isPresented: $showImagePicker, onDismiss: loadImage) {
                 ImagePicker(selectedImage: $selectedImage)
             }
+            .padding(.top, 44)
+            
+            if let selectedImage = selectedImage {
+                Button {
+                    viewModel.uploadProfileImage(selectedImage)
+                    
+                } label: {
+                    Text("Continue")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 340, height: 50)
+                        .background(Color(.systemBlue))
+                        .clipShape(Capsule())
+                        .padding()
+                }
+                .shadow(color:.gray.opacity(0.5), radius: 10, x: 0, y: 0)
+            }
             
             Spacer()
         }
@@ -53,7 +71,7 @@ private struct ProfileImageModifier: ViewModifier {
             .frame(width: 180, height: 180)
             .scaledToFit()
             .clipShape(Circle())
-            .padding(.top, 44)
+            
     }
 }
 

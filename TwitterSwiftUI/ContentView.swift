@@ -13,22 +13,24 @@ struct ContentView: View {
     
     
     var body: some View {
-        
-        HStack {
+        Group {
             if viewModel.userSession == nil {
                 LoginView()
             } else {
                 mainInterfaceView
             }
         }
-        
-        
     }
-    
-  
-    
-   
 }
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            ContentView()
+        }
+    }
+}
+
 
 
 
@@ -72,14 +74,5 @@ extension ContentView {
         .onAppear{
             showMenu = false
         }
-    }
-}
-
-
-
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
