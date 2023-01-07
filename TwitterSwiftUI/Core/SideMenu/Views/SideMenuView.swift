@@ -41,7 +41,7 @@ struct SideMenuView: View {
                     
                     if viewModel == .profile {
                         NavigationLink {
-                            ProfileVIew()
+                            ProfileVIew(user: user)
                         } label: {
                            SideMenuOptionRowView(viewModel: viewModel)
                         }
